@@ -1,6 +1,6 @@
 const express = require("express");
-const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const cors = require("cors");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const app = express();
 const port = process.env.PORT || 5000;
 require("dotenv").config();
@@ -24,7 +24,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    client.connect();
 
     // My Collections:
     const allBlogsCollection = client.db("dailyBlogDB").collection("allBlogs");
@@ -63,7 +63,7 @@ async function run() {
         // Fetch blogs and sort them in descending order based on currentDate
         const blogs = await allBlogsCollection
           .find(query)
-          .sort({ currentDate: -1 })
+          .sort({ currentDate: 1 })
           .skip(skip)
           .limit(limit)
           .toArray();
